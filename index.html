@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Camera App</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        #captureButton {
+            font-size: 16px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <button id="captureButton" onclick="openCamera()">Open Camera</button>
+
+    <script>
+        function openCamera() {
+            // Check if the browser supports the getUserMedia API
+            if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                // Prompt the user to allow access to the camera
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(function (stream) {
+                        // The user granted permission, so you can do something with the camera stream if needed
+                        console.log('Camera access granted');
+                        
+                        // For example, you could display the camera stream in a video element
+                        var video = document.createElement('video');
+                        video.srcObject = stream;
+                        document.body.appendChild(video);
+                        video.play();
+                    })
+                    .catch(function (error) {
+                        // The user denied permission or there was an error
+                        console.error('Camera access denied or error:', error);
+                    });
+            } else {
+                // The browser doesn't support getUserMedia
+                alert('Sorry, your browser does not support the camera feature.');
+            }
+        }
+    </script>
+</body>
+</html>
